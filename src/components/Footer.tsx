@@ -8,7 +8,6 @@ import { CONTACT_FORM_HREF, goToContactForm } from "./goToContactForm";
 const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/grow.withdigitaledge/",
   facebook: "https://www.facebook.com/share/19pqQLjnMz/",
-  // TODO: replace with the LinkedIn page link when available (temporarily points to Instagram)
   linkedin: "https://www.instagram.com/grow.withdigitaledge/",
 };
 
@@ -71,23 +70,20 @@ const company = [
 ];
 
 const headingClass =
-  "text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500 mb-5";
+  "text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500 mb-4 sm:mb-5";
 const linkClass =
-  "text-neutral-700 dark:text-neutral-300 hover:text-[#059669] dark:hover:text-[#55D98A] transition-colors";
+  "text-neutral-700 dark:text-neutral-300 hover:text-[#059669] dark:hover:text-[#55D98A] transition-colors text-sm";
 
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-neutral-100 dark:bg-[#09121C] border-t border-black/[0.08] dark:border-white/[0.08] text-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
-        <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-10 sm:gap-y-12">
           {/* Brand + socials */}
-          <div className="col-span-2 lg:col-span-4">
+          <div className="sm:col-span-2 lg:col-span-4">
             <BrandLogo size="lg" />
-            {/* <p className="mt-5 max-w-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-              Digital marketing agency in Tamil Nadu.
-            </p> */}
 
-            <div className="mt-7 flex gap-3">
+            <div className="mt-6 sm:mt-7 flex gap-3">
               {socials.map(({ label, href, Icon }) => (
                 <a
                   key={label}
@@ -107,7 +103,7 @@ export default function Footer() {
           {/* Services */}
           <div className="lg:col-span-3">
             <p className={headingClass}>Services</p>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5 sm:space-y-3">
               {services.map((s) => (
                 <li key={s}>
                   <Link href="/#services" className={linkClass}>
@@ -121,7 +117,7 @@ export default function Footer() {
           {/* Company */}
           <div className="lg:col-span-2">
             <p className={headingClass}>Company</p>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5 sm:space-y-3">
               {company.map((l) => (
                 <li key={l.href}>
                   <Link
@@ -139,24 +135,24 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="col-span-2 lg:col-span-3">
+          <div className="sm:col-span-2 lg:col-span-3">
             <p className={headingClass}>Get in touch</p>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5 sm:space-y-3">
               <li>
                 <a
                   href="tel:+918248316794"
-                  className={`${linkClass} inline-flex items-center gap-2.5`}
+                  className={`${linkClass} inline-flex items-center gap-2.5 break-all sm:break-normal`}
                 >
-                  <Phone className="w-4 h-4 text-[#059669] dark:text-[#55D98A]" />
+                  <Phone className="w-4 h-4 text-[#059669] dark:text-[#55D98A] shrink-0" />
                   +91 824 831 6794
                 </a>
               </li>
               <li>
                 <a
                   href="mailto:contact@growwithdigitaledge.com"
-                  className={`${linkClass} inline-flex items-center gap-2.5`}
+                  className={`${linkClass} inline-flex items-center gap-2.5 break-all sm:break-normal`}
                 >
-                  <Mail className="w-4 h-4 text-[#059669] dark:text-[#55D98A]" />
+                  <Mail className="w-4 h-4 text-[#059669] dark:text-[#55D98A] shrink-0" />
                   contact@growwithdigitaledge.com
                 </a>
               </li>
@@ -165,7 +161,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 py-6 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-col-reverse sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+        <div className="mt-12 sm:mt-16 py-6 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-col-reverse sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <p>© 2026 Digital Edge Marketing.</p>
           <button
             type="button"

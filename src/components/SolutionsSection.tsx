@@ -37,7 +37,7 @@ const services = [
 ];
 
 const arrowClass =
-  "w-10 h-10 rounded-full border border-black/15 dark:border-white/20 flex items-center justify-center transition-colors enabled:hover:border-[#55D98A] enabled:hover:text-[#059669] dark:enabled:hover:text-[#55D98A] disabled:opacity-30 cursor-pointer disabled:cursor-default";
+  "w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-black/15 dark:border-white/20 flex items-center justify-center transition-colors enabled:hover:border-[#55D98A] enabled:hover:text-[#059669] dark:enabled:hover:text-[#55D98A] disabled:opacity-30 cursor-pointer disabled:cursor-default shrink-0";
 
 export default function SolutionsSection() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -68,34 +68,34 @@ export default function SolutionsSection() {
   };
 
   return (
-    <section id="services" className="py-20 sm:py-24 bg-[#FAF9F5] dark:bg-[#0D1927] text-neutral-900 dark:text-white">
+    <section id="services" className="py-16 sm:py-24 bg-[#FAF9F5] dark:bg-[#0D1927] text-neutral-900 dark:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6">
           <div>
-            <p className="text-sm font-semibold text-[#059669] dark:text-[#55D98A] mb-3">What we do</p>
-            <h2 className="font-clash text-3xl sm:text-5xl font-bold tracking-tight leading-[1] max-w-2xl">
+            <p className="text-sm font-semibold text-[#059669] dark:text-[#55D98A] mb-2 sm:mb-3">What we do</p>
+            <h2 className="font-clash text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] sm:leading-[1] max-w-2xl">
               Five services, one goal: more enquiries.
             </h2>
           </div>
-          <div className="flex gap-2 shrink-0">
+          <div className="flex gap-2 self-start sm:self-auto shrink-0">
             <button type="button" onClick={() => slide(-1)} disabled={!canPrev} aria-label="Previous services" className={arrowClass}>
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
             <button type="button" onClick={() => slide(1)} disabled={!canNext} aria-label="Next services" className={arrowClass}>
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         </div>
 
-        <div ref={trackRef} className="mt-12 flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
+        <div ref={trackRef} className="mt-8 sm:mt-12 flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar pb-2">
           {services.map((svc) => (
             <article
               key={svc.title}
-              className="snap-start shrink-0 w-[85%] sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)] p-7 rounded-xl bg-white dark:bg-[#13273D] border border-black/[0.08] dark:border-white/10"
+              className="snap-start shrink-0 w-[88%] sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)] p-6 sm:p-7 rounded-xl bg-white dark:bg-[#13273D] border border-black/[0.08] dark:border-white/10 shadow-sm"
             >
-              <h3 className="font-clash text-xl font-bold">{svc.title}</h3>
+              <h3 className="font-clash text-lg sm:text-xl font-bold">{svc.title}</h3>
               <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">{svc.sub}</p>
-              <p className="mt-5 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{svc.desc}</p>
+              <p className="mt-4 sm:mt-5 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{svc.desc}</p>
               <ul className="mt-5 pt-5 border-t border-black/[0.06] dark:border-white/[0.08] space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
                 {svc.points.map((pt) => (
                   <li key={pt} className="flex gap-2.5">
