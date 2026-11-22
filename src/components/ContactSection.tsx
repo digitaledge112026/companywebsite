@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const inputClass =
-  "w-full px-4 py-3 rounded-lg bg-neutral-50 dark:bg-[#0E1E30] border border-neutral-300 dark:border-white/10 text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:border-[#55D98A] transition-colors";
+  "w-full px-4 py-3 rounded-lg bg-neutral-50 dark:bg-[#0E1E30] border border-neutral-300 dark:border-white/10 text-base sm:text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:border-[#55D98A] transition-colors";
 const labelClass =
   "block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5";
 
@@ -198,14 +198,14 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, service: e.target.value })
                       }
-                      className={inputClass}
+                      className={`${inputClass} cursor-pointer`}
                     >
-                      <option>Meta Ads</option>
-                      <option>Google Ads</option>
-                      <option>Social Media Management</option>
-                      <option>SEO</option>
-                      <option>Google Business Profile</option>
-                      <option>Others</option>
+                      <option className="bg-white dark:bg-[#0D1927] text-neutral-900 dark:text-white">Meta Ads</option>
+                      <option className="bg-white dark:bg-[#0D1927] text-neutral-900 dark:text-white">Google Ads</option>
+                      <option className="bg-white dark:bg-[#0D1927] text-neutral-900 dark:text-white">Social Media Management</option>
+                      <option className="bg-white dark:bg-[#0D1927] text-neutral-900 dark:text-white">SEO</option>
+                      <option className="bg-white dark:bg-[#0D1927] text-neutral-900 dark:text-white">Google Business Profile</option>
+                      <option className="bg-white dark:bg-[#0D1927] text-neutral-900 dark:text-white">Others</option>
                     </select>
                   </div>
                 </div>
@@ -226,24 +226,19 @@ export default function ContactSection() {
                   />
                 </div>
 
-                {/* Hidden spam trap — bots fill it, people don't see it */}
+                {/* Hidden spam trap — bots fill it, people don't see it (safe display:none that doesn't cause horizontal overflow) */}
                 <input
                   type="text"
                   name="company"
                   tabIndex={-1}
                   autoComplete="off"
-                  aria-hidden
+                  aria-hidden="true"
                   value={formData.company}
                   onChange={(e) =>
                     setFormData({ ...formData, company: e.target.value })
                   }
-                  style={{
-                    position: "absolute",
-                    left: "-9999px",
-                    width: 1,
-                    height: 1,
-                    opacity: 0,
-                  }}
+                  className="hidden"
+                  style={{ display: "none" }}
                 />
 
                 {failed && (

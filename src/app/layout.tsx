@@ -71,7 +71,7 @@ export default function RootLayout({
         />
       </head>
       <body 
-        className="min-h-screen bg-[#FAF9F5] dark:bg-[#0D1927] text-neutral-900 dark:text-white antialiased selection:bg-[#55D98A] selection:text-[#0D1927] transition-colors duration-200 overflow-x-hidden"
+        className="min-h-screen bg-[#FAF9F5] dark:bg-[#0D1927] text-neutral-900 dark:text-white antialiased selection:bg-[#55D98A] selection:text-[#0D1927] transition-colors duration-200"
         suppressHydrationWarning
       >
         {children}

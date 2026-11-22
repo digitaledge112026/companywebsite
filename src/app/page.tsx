@@ -8,9 +8,9 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F5] dark:bg-[#0D1927] text-neutral-900 dark:text-white selection:bg-[#55D98A] selection:text-[#0D1927] transition-colors duration-200">
+    <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-clip bg-[#FAF9F5] dark:bg-[#0D1927] text-neutral-900 dark:text-white selection:bg-[#55D98A] selection:text-[#0D1927] transition-colors duration-200">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-clip">
         <Hero />
         <AboutSection />
         <SolutionsSection />
