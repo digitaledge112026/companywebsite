@@ -2,7 +2,13 @@ import nodemailer from "nodemailer";
 
 export const runtime = "nodejs";
 
-const TO = process.env.CONTACT_TO || "contact@growwithdigitaledge.com";
+const getRecipient = () => {
+  const customTo = process.env.CONTACT_TO?.trim();
+  if (customTo && customTo.includes("@")) {
+    return customTo;
+  }
+  return "contact@growwithdigitaledge.com";
+};
 
 const escape = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
@@ -29,6 +35,30 @@ export async function POST(req: Request) {
   if (!name || !phone) {
     return Response.json({ error: "Name and phone are required" }, { status: 400 });
   }
+
+  // International phone number validation:
+  const digitsOnly = phone.replace(/\D/g, "");
+  if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+    return Response.json(
+      { error: "Please enter a valid phone number (7 to 15 digits)" },
+      { status: 400 }
+    );
+  }
+
+  // India-specific mobile validation (+91 or starts with 91 followed by 10 digits):
+  if (phone.startsWith("+91") || phone.startsWith("91")) {
+    const indianDigits = phone.replace(/^(\+91|91)\s*/, "").replace(/\D/g, "");
+    if (!/^[6-9]\d{9}$/.test(indianDigits)) {
+      return Response.json(
+        {
+          error:
+            "Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9",
+        },
+        { status: 400 }
+      );
+    }
+  }
+
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return Response.json({ error: "Please enter a valid email" }, { status: 400 });
   }
@@ -45,6 +75,7 @@ export async function POST(req: Request) {
     port,
     secure: port === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    connectionTimeout: 10000,
   });
 
   const rows: [string, string][] = [
@@ -58,7 +89,7 @@ export async function POST(req: Request) {
   try {
     await transporter.sendMail({
       from: `"Digital Edge Website" <${SMTP_USER}>`,
-      to: TO,
+      to: getRecipient(),
       replyTo: email || undefined,
       subject: `New enquiry: ${name}${service ? ` (${service})` : ""}`,
       text: rows.map(([k, v]) => `${k}: ${v}`).join("\n"),

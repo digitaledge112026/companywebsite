@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import InternationalPhoneInput from "./InternationalPhoneInput";
 
 const inputClass =
   "w-full px-4 py-3 rounded-lg bg-neutral-50 dark:bg-[#0E1E30] border border-neutral-300 dark:border-white/10 text-base sm:text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:border-[#55D98A] transition-colors";
@@ -74,17 +75,29 @@ export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState(emptyForm);
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isPhoneValid) {
+      setErrorMessage("Please enter a valid phone number for your selected country.");
+      return;
+    }
+
     setSending(true);
     setFailed(false);
+    setErrorMessage("");
+
     try {
       await sendEnquiry(formData);
       setSubmitted(true);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Contact form:", err);
+      const msg = err instanceof Error ? err.message : "Email failed";
+      setErrorMessage(msg);
       setFailed(true);
     } finally {
       setSending(false);
@@ -128,6 +141,7 @@ export default function ContactSection() {
                 <button
                   onClick={() => {
                     setFormData(emptyForm);
+                    setIsPhoneValid(false);
                     setSubmitted(false);
                   }}
                   className="mt-5 text-sm text-[#059669] dark:text-[#55D98A] hover:underline cursor-pointer"
@@ -140,12 +154,13 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass} htmlFor="c-name">
-                      Name
+                      Name *
                     </label>
                     <input
                       id="c-name"
                       required
                       type="text"
+                      placeholder="Your name"
                       value={formData.name}
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
@@ -155,17 +170,17 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <label className={labelClass} htmlFor="c-phone">
-                      Phone / WhatsApp
+                      Phone / WhatsApp *
                     </label>
-                    <input
+                    <InternationalPhoneInput
                       id="c-phone"
                       required
-                      type="tel"
                       value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                      className={inputClass}
+                      onChange={(fullNumber, isValid) => {
+                        setFormData((prev) => ({ ...prev, phone: fullNumber }));
+                        setIsPhoneValid(isValid);
+                        if (errorMessage) setErrorMessage("");
+                      }}
                     />
                   </div>
                 </div>
@@ -181,6 +196,7 @@ export default function ContactSection() {
                     <input
                       id="c-email"
                       type="email"
+                      placeholder="you@company.com"
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
@@ -226,7 +242,7 @@ export default function ContactSection() {
                   />
                 </div>
 
-                {/* Hidden spam trap — bots fill it, people don't see it (safe display:none that doesn't cause horizontal overflow) */}
+                {/* Hidden spam trap */}
                 <input
                   type="text"
                   name="company"
@@ -240,6 +256,13 @@ export default function ContactSection() {
                   className="hidden"
                   style={{ display: "none" }}
                 />
+
+                {/* Inline error feedback if validation or API fails */}
+                {errorMessage && !failed && (
+                  <p className="text-sm text-rose-500 font-medium">
+                    {errorMessage}
+                  </p>
+                )}
 
                 {failed && (
                   <div
@@ -264,8 +287,8 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  disabled={sending}
-                  className="w-full py-3.5 rounded-lg font-semibold text-[#0D1927] bg-[#55D98A] hover:bg-[#42C274] transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-wait"
+                  disabled={sending || !isPhoneValid}
+                  className="w-full py-3.5 rounded-lg font-semibold text-[#0D1927] bg-[#55D98A] hover:bg-[#42C274] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {sending ? "Sending..." : "Send message"}
                 </button>
