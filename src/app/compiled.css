@@ -941,6 +941,12 @@
   .rounded-3xl {
     border-radius: var(--radius-3xl);
   }
+  .rounded-\[1px\] {
+    border-radius: 1px;
+  }
+  .rounded-\[2px\] {
+    border-radius: 2px;
+  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
@@ -1850,10 +1856,6 @@
     line-height: 1.05;
   }
   .leading-\[1\] {
-    --tw-leading: 1;
-    line-height: 1;
-  }
-  .leading-none {
     --tw-leading: 1;
     line-height: 1;
   }
